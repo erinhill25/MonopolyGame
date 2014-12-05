@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MonopolyGame {
+public class MonopolyGame extends Observable {
 	
 	private static final int ROUNDS_TOTAL = 20;
 	private static final int PLAYERS_TOTAL = 2;
@@ -21,6 +21,9 @@ public class MonopolyGame {
 		for(int i=0; i< ROUNDS_TOTAL; i++) {
 			playRound();
 		}
+		
+		this.setChanged();
+		this.notifyObservers(new ObservableArgument("endGame", true));
 	}
 	
 	public List<Player> getPlayers() {
@@ -32,14 +35,38 @@ public class MonopolyGame {
 		for(Iterator<Player> iter = players.iterator(); iter.hasNext();) {
 			
 			Player player = (Player) iter.next();
-			player.takeTurn();
+			GameMove move = player.takeTurn();
+			
+			this.setChanged();
+			this.notifyObservers(new ObservableArgument("update", move));
 		}
 		
 	}
 	
+	public void saveGame() { }
+	
+	public void loadGame() { }
+	
 	public static void main(String[] args) {
 		MonopolyGame g = new MonopolyGame();
-		g.playGame();
+		
+		GameStorageAdapter storage = new FileStorage();
+		g.addObserver((Observer) storage);
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Start a new game or load? N = new game, L = load");
+		String s = in.nextLine();
+		if(s.equals("n")) {
+		    
+		    g.playGame();
+		
+		} else {
+		    
+		    g.loadGame(); 
+		    
+		}
+		
+		in.close();
 	}
 
 }

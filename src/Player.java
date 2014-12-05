@@ -13,16 +13,18 @@ public class Player {
 		piece = new Piece(board.getStartSquare());
 	}
 	
-	public void takeTurn() {
+	public GameMove takeTurn() {
 		
 		int rollTotal = 0;
 		for(int i=0;i<dice.length;i++) {
 			dice[i].roll();
 			rollTotal += dice[i].getFaceValue();
 		}
-		
+		Square oldLoc = piece.getLocation();
 		Square newLoc = board.getSquare(piece.getLocation(), rollTotal);
 		piece.setLocation(newLoc);
+		
+		return new GameMove(name, rollTotal, oldLoc, newLoc);
 		
 	}
 	
