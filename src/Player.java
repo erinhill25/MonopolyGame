@@ -24,7 +24,7 @@ public class Player {
 		Square newLoc = board.getSquare(piece.getLocation(), rollTotal);
 		piece.setLocation(newLoc);
 		
-		return new GameMove(name, rollTotal, oldLoc, newLoc);
+		return new GameMove(name, rollTotal, oldLoc.getIndex(), newLoc.getIndex());
 		
 	}
 	

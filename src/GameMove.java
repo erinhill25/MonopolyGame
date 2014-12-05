@@ -2,11 +2,9 @@
 public class GameMove {
 
     private String player;
-    private int diceRoll;
-    private Square startSquare;
-    private Square endSquare;
+    private int diceRoll, startSquare, endSquare;
     
-    public GameMove(String player, int diceRoll, Square startSquare, Square endSquare) {
+    public GameMove(String player, int diceRoll, int startSquare, int endSquare) {
         this.player = player;
         this.startSquare = startSquare;
         this.endSquare = endSquare;
@@ -21,16 +19,16 @@ public class GameMove {
         return diceRoll;
     }
     
-    public Square getStartSquare() {
+    public int getStartSquare() {
         return startSquare;
     }
     
-    public Square getEndSquare() {
+    public int getEndSquare() {
         return endSquare; 
     }
     
     public String toString() {
-        return "Player: " + player + " Roll: " + diceRoll + " Start Square: " + startSquare.getIndex() + " End Square: " + endSquare.getIndex();
+        return "Player: " + player + " Roll: " + diceRoll + " Start Square: " + startSquare + " End Square: " + endSquare;
     }
     
 }

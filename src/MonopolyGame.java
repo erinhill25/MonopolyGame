@@ -50,7 +50,7 @@ public class MonopolyGame extends Observable {
 	public static void main(String[] args) {
 		MonopolyGame g = new MonopolyGame();
 		
-		GameStorageAdapter storage = new FileStorage();
+		GameStorageAdapter storage = FileStorage.getInstance();
 		g.addObserver((Observer) storage);
 		
 		Scanner in = new Scanner(System.in);
@@ -62,7 +62,7 @@ public class MonopolyGame extends Observable {
 		
 		} else {
 		    
-		    g.loadGame(); 
+		    storage.loadGame(); 
 		    
 		}
 		
