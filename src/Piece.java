@@ -7,7 +7,6 @@ public class Piece {
 	}
 	
 	public Square getLocation() {
-		//added test commment to figure out github
 		return this.location;
 	}
 	

@@ -1,11 +1,11 @@
 import java.util.*;
 import java.io.*;
 
-public class FileStorage implements GameStorageAdapter, Observer {
+public class FileStorage implements GameStorageAdapter {
     
-    private ArrayList<GameMove> moves = new ArrayList<GameMove>();
-    
+
     private static GameStorageAdapter myInstance = new FileStorage();
+    private String fileName = "gameData.txt";
     
     private FileStorage() {
         
@@ -14,28 +14,12 @@ public class FileStorage implements GameStorageAdapter, Observer {
     public static GameStorageAdapter getInstance() {
         return myInstance;
     }
-    
-    public void update(Observable source, Object value) {
+   
+    public ArrayList<HashMap<String, String>> loadData() {
         
-        ObservableArgument arg = (ObservableArgument) value;
-        
-        if(arg.getName() == "update") {
-            
-            GameMove move = (GameMove) arg.getValue();
-            moves.add(move);
-        }
-        else if(arg.getName() == "endGame") {
-            
-            saveGame();
-            
-        }
-        
-        System.out.println(moves.toString());
-    }
-    
-    public void loadGame() {
-        
-        File file = new File("gameData.txt");
+        ArrayList<HashMap<String, String>> values = new ArrayList<HashMap<String, String>>();
+
+        File file = new File(fileName);
         BufferedReader reader = null;
 
         try {
@@ -45,17 +29,19 @@ public class FileStorage implements GameStorageAdapter, Observer {
             while ((text = reader.readLine()) != null) {
                 
                 if(text.equals("")) break;
+                
+                HashMap<String, String> valueMap = new HashMap<String, String>();
 
                 String[] items = text.split(",");
                 
                 for(int i=0;i<items.length;i++) {
                     
-                    items[i] = items[i].trim();
+                    String[] valuePair = items[i].trim().split(":");
+                    valueMap.put(valuePair[0], valuePair[1]); 
                     
                 }
-  
-                GameMove move = new GameMove((String) items[0], Integer.parseInt(items[1]), Integer.parseInt(items[2]), Integer.parseInt(items[3]));
-                moves.add(move);
+                
+                values.add(valueMap);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -69,22 +55,34 @@ public class FileStorage implements GameStorageAdapter, Observer {
             } catch (IOException e) {
             }
         }
-        System.out.println(moves.toString());
+
+        return values;
     } 
     
-    public void saveGame() {
+    public void storeData(ArrayList<HashMap<String, String>> values) {
+        
         PrintWriter writer = null; 
         try {
-            writer = new PrintWriter("gameData.txt", "UTF-8");
+            writer = new PrintWriter(fileName, "UTF-8");
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         
-        for(GameMove move : moves) {
-            writer.write(move.getPlayer()+","+move.getDiceRoll()+","+move.getStartSquare()+","+move.getEndSquare()+"\n");
+        String line = "";
+        for(HashMap<String, String> valueMap : values) {
+            for(Map.Entry<String, String> entry : valueMap.entrySet()) {
+                
+                line += entry.getKey() + ":" + entry.getValue() + ",";
+                
+            }
+            line = line.substring(0, line.length()-1);
+            line += "\n";
         }
-        
+      
+        writer.write(line);
         writer.close();
     }
+    
+
 
 }

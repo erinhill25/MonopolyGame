@@ -23,7 +23,7 @@ public class MonopolyGame extends Observable {
 		}
 		
 		this.setChanged();
-		this.notifyObservers(new ObservableArgument("endGame", true));
+		this.notifyObservers(new ObservableArgument("saveGame", true));
 	}
 	
 	public List<Player> getPlayers() {
@@ -43,15 +43,17 @@ public class MonopolyGame extends Observable {
 		
 	}
 	
-	public void saveGame() { }
-	
-	public void loadGame() { }
+	public void loadGame() {
+	    
+	    this.setChanged();
+        this.notifyObservers(new ObservableArgument("loadGame", true));
+	}
 	
 	public static void main(String[] args) {
 		MonopolyGame g = new MonopolyGame();
 		
-		GameStorageAdapter storage = FileStorage.getInstance();
-		g.addObserver((Observer) storage);
+		GameObserver observer = new GameObserver();
+		g.addObserver(observer);
 		
 		Scanner in = new Scanner(System.in);
 		System.out.println("Start a new game or load? N = new game, L = load");
@@ -62,7 +64,7 @@ public class MonopolyGame extends Observable {
 		
 		} else {
 		    
-		    storage.loadGame(); 
+		    g.loadGame(); 
 		    
 		}
 		

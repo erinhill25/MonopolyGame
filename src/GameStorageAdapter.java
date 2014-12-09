@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public interface GameStorageAdapter {
 
-    public void loadGame();
+    public ArrayList<HashMap<String, String>> loadData();
     
-    public void saveGame(); 
+    public void storeData(ArrayList<HashMap<String, String>> values); 
     
 }

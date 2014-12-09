@@ -12,7 +12,6 @@ public class Die {
 	public void roll() {
 		faceValue = (int) (( Math.random() * MAX) + 1);
 		
-		System.out.println("Rolled a " + faceValue);
 	}
 	
 	public int getFaceValue() {
