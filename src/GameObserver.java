@@ -28,8 +28,12 @@ public class GameObserver implements Observer {
             ArrayList<HashMap<String, String>> values = storage.loadData();
             
             for(HashMap<String, String> valueMap : values) {
-                GameMove newMove = new GameMove( (String) valueMap.get("player"), Integer.parseInt(valueMap.get("diceRoll")), 
-                      Integer.parseInt(valueMap.get("startSquare")), Integer.parseInt(valueMap.get("endSquare")));
+                GameMove newMove = new GameMove( 
+                         (String) valueMap.get("player"), 
+                         Integer.parseInt(valueMap.get("diceRoll")), 
+                         Integer.parseInt(valueMap.get("startSquare")), 
+                         Integer.parseInt(valueMap.get("endSquare"))
+                );
                 moves.add(newMove);
             }
             
