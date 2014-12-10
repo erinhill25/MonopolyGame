@@ -1,13 +1,13 @@
 import java.util.*;
 import java.io.*;
 
-public class FileStorage implements GameStorageAdapter {
+public class FileStorageAdapter implements GameStorageAdapter {
     
 
-    private static GameStorageAdapter myInstance = new FileStorage();
+    private static GameStorageAdapter myInstance = new FileStorageAdapter();
     private String fileName = "gameData.txt";
     
-    private FileStorage() {
+    private FileStorageAdapter() {
         
     }
     

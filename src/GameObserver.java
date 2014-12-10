@@ -3,7 +3,7 @@ import java.util.*;
 public class GameObserver implements Observer {
 
     private ArrayList<GameMove> moves = new ArrayList<GameMove>();
-    private GameStorageAdapter storage = FileStorage.getInstance();
+    private GameStorageAdapter storage = FileStorageAdapter.getInstance();
     
     
     public void update(Observable source, Object value) {
