@@ -52,7 +52,7 @@ public class MonopolyGame extends Observable {
 	public static void main(String[] args) {
 		MonopolyGame g = new MonopolyGame();
 		
-		GameObserver observer = new GameObserver();
+		Observer observer = GameObserver.getInstance();
 		g.addObserver(observer);
 		
 		Scanner in = new Scanner(System.in);

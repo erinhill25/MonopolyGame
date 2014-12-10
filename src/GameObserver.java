@@ -5,6 +5,13 @@ public class GameObserver implements Observer {
     private ArrayList<GameMove> moves = new ArrayList<GameMove>();
     private GameStorageAdapter storage = FileStorageAdapter.getInstance();
     
+    private static Observer gameObserver = new GameObserver(); 
+    
+    private GameObserver() {} 
+    
+    public static Observer getInstance() {
+        return gameObserver;
+    }
     
     public void update(Observable source, Object value) {
         
